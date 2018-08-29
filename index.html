@@ -88,7 +88,9 @@
                 return (
                     <div className="container">
                         <h1 className="title">第{this.state.circle}回合</h1>
+                        <h3>{this._subTitle()}</h3>
                         <div className="board">{cells}</div>
+                        <button onClick={this._reset.bind(this)}>Reset</button>
                     </div>
                 )
             }
@@ -133,7 +135,23 @@
 					return {side:marks[2], startIndex:2, endIndex:6};
 				}
 				return null;
-			}
+            }
+            
+            _getUser(i){
+                return (i === 0)? "O" : "X"
+            }
+
+            _subTitle(){
+                return (this.state.winner !== null)?`${this._getUser(this.state.winner.side)} 獲勝`:`換 ${this._getUser(this.state.circle % 2)} 動作`
+            }
+
+            _reset(){
+                this.setState({
+                    circle:0,
+                    marks: [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+                    winner: null,
+                })
+            }
         }
 
         window.addEventListener("load", ()=>{
